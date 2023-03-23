@@ -1,0 +1,7 @@
+# .gitignore
+
+__pycache__/
+*.log*
+extracted_files.json
+config.yaml
+test
