@@ -87,7 +87,6 @@ def validate_max_log_size(config):
         if not isinstance(config["max_log_size"], int) or config["max_log_size"] < 10 or config["max_log_size"] > 100:
             raise ValueError("max_log_size must be an integer between 10 MB and 100 MB.")
         config["max_log_size"] = config["max_log_size"] * 1024 * 1024
-        print(config["max_log_size"])
         return config["max_log_size"]
     return None
 
@@ -158,13 +157,20 @@ class WatcherEventHandler(FileSystemEventHandler):
     def on_moved(self, event):
         logging.debug(f"File {event.src_path} has been moved to {event.dest_path}")  # Ignoring moved files
 
+    def is_first_volume(rar_file):
+        """Check if the RAR file is the first volume of a split archive."""
+        for info in rar_file.infolist():
+            if info.flags & rarfile.RAR_FIRST_VOLUME:
+                return True
+        return False
+
     def extract_rar(self, rar_file_path):
         if rar_file_path in self.extracted_files:
             logging.info(f"Skipping already extracted file: {rar_file_path}")
             return
         try:
             with rarfile.RarFile(rar_file_path) as rf:
-                if not rf.is_first_volume():  # Check if it's the first volume of a split archive
+                if not is_first_volume(rf):  # Check if it's the first volume of a split archive
                     logging.info(f"Skipping non-first volume: {rar_file_path}")
                     return
 
