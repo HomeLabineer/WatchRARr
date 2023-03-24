@@ -164,7 +164,7 @@ class WatcherEventHandler(FileSystemEventHandler):
             return
         try:
             with rarfile.RarFile(rar_file_path) as rf:
-                if not rf.needs_check_volumelist():  # Check if it's a part of a split archive
+                if not rf.is_first_volume():  # Check if it's the first volume of a split archive
                     logging.info(f"Skipping non-first volume: {rar_file_path}")
                     return
 
