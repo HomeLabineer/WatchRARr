@@ -3,23 +3,23 @@
 # This project is licensed under the MIT License. See the LICENSE file for details.
 
 # Path to the directory you want to watch.
-path: test # Comment out if using docker
+# path: test # Comment out if using docker
 
 # If using docker, uncomment the following line and make sure your docker-compose properly maps the desired directory to watch:
-# path:/app/watch
+path: /app/watch
 # docker-compose ex: - /mnt/data:/app/watch
 
 # Use polling observer (useful for NFS shares). Set to 'true' or 'false'.
-polling: true
+polling: False
 
 # Polling interval in seconds. Must be a positive number greater than 0 and less than or equal to 300.
-interval: 5
+interval: 60
 
 # Path to the log file where events will be recorded.
-log_file: watchrarr.log # Comment out if using docker
+# log_file: watchrarr.log # Comment out if using docker
 
 # If using docker, uncomment the following line and make sure your docker-compose properly maps the desired logs directory:
-# log_file: /app/logs/watchrarr.log
+log_file: /app/logs/watchrarr.log
 # docker-compose ex: - logs
 
 # Enable debug logging. Set to 'true' or 'false'.

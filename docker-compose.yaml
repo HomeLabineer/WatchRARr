@@ -6,10 +6,9 @@ services:
     container_name: watchrarr
     restart: unless-stopped
     volumes:
-      - ./config.yaml:/app/config.yaml
-      - ./logs:/app/logs
-      - /path/to/your/watch/directory:/app/watch
-    command: ["-c", "/app/config.yaml"]
+      - /mnt/docker_data/watchrarr/config.yaml:/app/config.yaml
+      - /mnt/docker_data/watchrarr/logs:/app/logs
+      - /mnt/media/Complete:/app/watch
 
 # This configuration maps the logs directory inside the container to a local logs directory and maps the watch directory inside the container to a local directory specified by /path/to/your/watch/directory. Replace /path/to/your/watch/directory with the actual path of the directory you want to watch on your host system.
 
