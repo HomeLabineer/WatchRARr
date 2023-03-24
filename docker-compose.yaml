@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  watchrarr:
+    image: homelabineer/watchrarr:latest
+    container_name: watchrarr
+    restart: unless-stopped
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - ./logs:/app/logs
+      - /path/to/your/watch/directory:/app/watch
+    command: ["-c", "/app/config.yaml"]
+
+# This configuration maps the logs directory inside the container to a local logs directory and maps the watch directory inside the container to a local directory specified by /path/to/your/watch/directory. Replace /path/to/your/watch/directory with the actual path of the directory you want to watch on your host system.
+
+# Make sure the script is configured to save logs and monitor the /app/logs and /app/watch directories respectively inside the container. This way, the logs and monitored files will be stored on your local system and persist across container restarts.
