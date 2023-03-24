@@ -1,7 +1,0 @@
-watchdog
-rarfile
-PyYAML
-
-# watchdog>=2.1.6
-# rarfile>=4.0
-# PyYAML>=6.0
