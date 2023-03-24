@@ -19,9 +19,83 @@ WatchRARr is a Python script that monitors a specified directory for the creatio
 
 ---
 
+#### Docker
+
+Using WatchRARr with Docker makes the installation and setup process easier and more consistent across different platforms. Below are the steps to run WatchRARr using Docker:
+
+1. Make sure you have Docker installed on your system. If not, you can download it from the [official website](https://www.docker.com/get-started).
+
+2. Clone the repository:
+
+```bash
+git clone https://github.com/HomeLabineer/WatchRARr.git
+cd WatchRARr
+```
+
+1. Make a `config.yaml` by copying `config-template.yaml`:
+```bash
+mv config-template.yaml config.yaml
+```
+
+2. Edit the `config.yaml` as needed, here is mine as an example:
+```yaml
+# watchrarr.py configuration file
+# Copyright (C) 2023 HomeLabineer
+# This project is licensed under the MIT License. See the LICENSE file for details.
+
+# Path to the directory you want to watch.
+# path: test # Comment out if using docker
+
+# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired directory to watch:
+path: /app/watch
+# docker-compose ex: - /mnt/data:/app/watch
+
+# Use polling observer (useful for NFS shares). Set to 'true' or 'false'.
+polling: False
+
+# Polling interval in seconds. Must be a positive number greater than 0 and less than or equal to 300.
+interval: 60
+
+# Path to the log file where events will be recorded.
+# log_file: watchrarr.log # Comment out if using docker
+
+# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired logs directory:
+log_file: /app/logs/watchrarr.log
+# docker-compose ex: - logs
+
+# Enable debug logging. Set to 'true' or 'false'.
+debug: false
+
+# The maximum size of the log file in MB before it's rotated. Must be an integer between 10 MB and 100 MB.
+max_log_size: 10
+
+# The number of backup log files to keep before overwriting the oldest log file. Must be an integer between 1 and 100.
+log_backup_count: 9
+```
+
+4. Edit the `docker-compose.yaml` as needed, here is mine as an example:
+```yaml
+services:
+  watchrarr:
+    image: homelabineer/watchrarr:latest
+    container_name: watchrarr
+    restart: unless-stopped
+    volumes:
+      - /mnt/docker_data/watchrarr/config.yaml:/app/config.yaml
+      - /mnt/docker_data/watchrarr/logs:/app/logs
+      - /mnt/media/Complete:/app/watch
+```
+
+5. Start the WatchRARr container:
+```bash
+docker-compose up -d
+```
+
+---
+
 #### Linux / macOS
 
-1. Install Python 3.7 or newer if you haven't already. You can download Python from the [official website](https://www.python.org/downloads/).
+1. Install Python 3.6 or newer if you haven't already. You can download Python from the [official website](https://www.python.org/downloads/).
 
 2. Clone the repository:
 ```bash
@@ -42,7 +116,6 @@ python3 watchrarr.py
 ```
 
 ---
-
 
 #### Windows
 
@@ -87,16 +160,18 @@ Recursively watch a directory for RAR files.
 
 optional arguments:
 -h, --help show this help message and exit
---path PATH Path to the directory you want to watch. (default=None)
---config CONFIG Path to the configuration file (YAML format). (default=config.yaml)
+--path PATH Path to the directory you want to watch.
+--config CONFIG Path to the configuration file (YAML format).
 --polling Use polling observer (useful for NFS shares).
---interval INTERVAL Polling interval in seconds (default: 5).
---log_file LOG_FILE Path to the log file where events will be recorded (default: watchrarr.log).
+--interval INTERVAL Polling interval in seconds.
+--log_file LOG_FILE Path to the log file where events will be recorded.
 --debug Enable debug logging.
 --max_log_size MAX_LOG_SIZE
-The maximum size of the log file in megabytes before its rotated (default: 10).
+The maximum size of the log file in megabytes before its rotated.
 --log_backup_count LOG_BACKUP_COUNT
-The number of backup log files to keep before overwriting the oldest log file (default: 8).
+The number of backup log files to keep before overwriting the oldest log file.
+
+Default values for these options can be found in the example config.yaml file.
 ```
 
 ---
