@@ -164,6 +164,10 @@ class WatcherEventHandler(FileSystemEventHandler):
             return
         try:
             with rarfile.RarFile(rar_file_path) as rf:
+                if not rf.needs_check_volumelist():  # Check if it's a part of a split archive
+                    logging.info(f"Skipping non-first volume: {rar_file_path}")
+                    return
+
                 target_dir = os.path.dirname(rar_file_path)
                 for entry in rf.infolist():
                     temp_file_path = os.path.join(target_dir, entry.filename + ".tmp")
