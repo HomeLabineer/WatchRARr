@@ -19,34 +19,53 @@ from watchdog.observers.polling import PollingObserver
 from watchdog.events import FileSystemEventHandler
 import logging.handlers
 import re
-import json
 import yaml
+import sqlite3
 
-def load_extracted_files(file_path):
-    """
-    Load extracted files information from a JSON file.
-
-    :param file_path: Path to the JSON file.
-    :return: A dictionary containing extracted files information.
-    """
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as f:
-            return json.load(f)
-    else:
-        return {}
-
-def save_extracted_files(file_path, extracted_files):
-    with open(file_path, 'w') as f:
-        json.dump(extracted_files, f)
-
-def process_existing_rar_files(path, handler):
-    logging.info("Performing initial recursive search for RAR files")
-    for root, _, files in os.walk(path):
+def process_existing_rar_files(directory, event_handler):
+    for root, _, files in os.walk(directory):
         for file in files:
-            _, file_ext = os.path.splitext(file.lower())
-            if WatcherEventHandler.rar_pattern.match(file_ext):
-                file_path = os.path.join(root, file)
-                handler.extract_rar(file_path)
+            if WatcherEventHandler.rar_pattern.search(file):
+                rar_file_path = os.path.join(root, file)
+                try:
+                    event_handler.extract_rar(rar_file_path)
+                except Exception as e:
+                    logging.error(f"Error processing existing RAR file {rar_file_path}: {e}")
+
+def create_extracted_files_table():
+    try:
+        conn = sqlite3.connect("extracted_files.db")
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS extracted_files (path TEXT PRIMARY KEY)''')
+        conn.commit()
+        conn.close()
+    except sqlite3.Error as e:
+        logging.error(f"Error creating extracted_files table: {e}")
+        raise
+
+def load_extracted_files():
+    try:
+        create_extracted_files_table()
+        conn = sqlite3.connect("extracted_files.db")
+        c = conn.cursor()
+        c.execute('''SELECT path FROM extracted_files''')
+        extracted_files = {row[0]: True for row in c.fetchall()}
+        conn.close()
+        return extracted_files
+    except sqlite3.Error as e:
+        logging.error(f"Error loading extracted_files data: {e}")
+        raise
+
+def save_extracted_file(rar_file_path):
+    try:
+        conn = sqlite3.connect("extracted_files.db")
+        c = conn.cursor()
+        c.execute('''INSERT OR IGNORE INTO extracted_files (path) VALUES (?)''', (rar_file_path,))
+        conn.commit()
+        conn.close()
+    except sqlite3.Error as e:
+        logging.error(f"Error saving extracted_file: {e}")
+        raise
 
 def validate_path(config):
     if "path" in config:
@@ -135,8 +154,8 @@ def update_args_from_config(args, config_file_path):
 class WatcherEventHandler(FileSystemEventHandler):
     rar_pattern = re.compile(r"\.rar$|\.r\d\d$|\.part\d+\.rar$")
 
-    def __init__(self, extracted_files):
-        self.extracted_files = extracted_files
+    def __init__(self):
+        self.extracted_files = load_extracted_files()
 
     def on_modified(self, event):
         logging.debug(f"File {event.src_path} has been modified") # Ignoring modifications, focusing on created RAR files
@@ -157,6 +176,7 @@ class WatcherEventHandler(FileSystemEventHandler):
     def on_moved(self, event):
         logging.debug(f"File {event.src_path} has been moved to {event.dest_path}")  # Ignoring moved files
 
+    @staticmethod
     def is_first_volume(rar_file):
         """Check if the RAR file is the first volume of a split archive."""
         for info in rar_file.infolist():
@@ -170,7 +190,7 @@ class WatcherEventHandler(FileSystemEventHandler):
             return
         try:
             with rarfile.RarFile(rar_file_path) as rf:
-                if not is_first_volume(rf):  # Check if it's the first volume of a split archive
+                if not WatcherEventHandler.is_first_volume(rf):  # Check if it's the first volume of a split archive
                     logging.info(f"Skipping non-first volume: {rar_file_path}")
                     return
 
@@ -196,7 +216,8 @@ class WatcherEventHandler(FileSystemEventHandler):
                     logging.info(f"File {final_file_path} has been created")  # Now we want to know about it in INFO
         except rarfile.Error as e:
             logging.error(f"Failed to extract {rar_file_path}: {e}")
-        self.extracted_files[rar_file_path] = True
+            self.extracted_files[rar_file_path] = True
+            save_extracted_file(rar_file_path)
 
 def setup_logging(args):
     """
@@ -240,10 +261,8 @@ def main(args):
         print(f"Error setting up logging: {e}")
         sys.exit(1)
 
-    # Load the extracted files information and create the event handler
-    extracted_files_path = "extracted_files.json"
-    extracted_files = load_extracted_files(extracted_files_path)
-    event_handler = WatcherEventHandler(extracted_files)
+    # Create the event handler
+    event_handler = WatcherEventHandler()
 
     # Start the script line in log
     logging.info("Starting watchrarr.py") 
@@ -268,10 +287,13 @@ def main(args):
     try:
         while True:
             time.sleep(1)
-            save_extracted_files(extracted_files_path, event_handler.extracted_files)
     except KeyboardInterrupt:
         observer.stop()
-        save_extracted_files(extracted_files_path, event_handler.extracted_files)
+        for rar_file_path in event_handler.extracted_files:
+            try:
+                save_extracted_file(rar_file_path)
+            except Exception as e:
+                logging.error(f"Error saving extracted file {rar_file_path}: {e}")
     observer.join()
 
 if __name__ == "__main__":

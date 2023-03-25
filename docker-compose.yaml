@@ -5,6 +5,7 @@ services:
     image: homelabineer/watchrarr:latest
     container_name: watchrarr
     restart: unless-stopped
+    user: 1000:1000
     volumes:
       - /mnt/docker_data/watchrarr/config.yaml:/app/config.yaml
       - /mnt/docker_data/watchrarr/logs:/app/logs
