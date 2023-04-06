@@ -1,208 +1,121 @@
 # WatchRARr
 
-WatchRARr is a Python script that monitors a specified directory for the creation of RAR files (including split or spanned RAR archives) and automatically extracts them upon creation. It utilizes the `watchdog` library for monitoring file system events and the `rarfile` library for handling RAR archives.
+WatchRARr is a Python application designed to recursively watch a directory for RAR files and extract them upon creation. The script processes both single RAR files and split/spanned RAR archives. It also maintains a SQLite database to keep track of processed files and avoid reprocessing them.
+
+---
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Planned](#planned)
+- [Contributing](#contributing)
+- [Reporting issues](#reportingissues)
+- [Submitting pull requests](#submittingpullrequests)
+- [Credits](#credits)
+- [License](#license)
+
+---
+
+## Features
+
+- Recursively watches for file changes within a specified directory for rar archives
+- When detected, waits for the rar archive or all files  in a split archive to complete transfer into directory and then extracts the archive
+- Appends .tmp to the extracted file name until extraction process is complete so other programs don't pick it  up early and copy/move a partial file
+- Logs the file path to a database so it never attempts to extract an archive twice
+- Scans the watched directory at startup and at a scheduled interval (configurable by user) to ensure no archives have been missed
+- Comes with a [helper script](db-manager.sh) to manage the db - This allows you to easily see what is in the db, remove entries, manually add entries, take db backups and restore from backup
+- Designed best to run as a Docker container along with the rest of your *arr apps!
 
 ---
 
 ## Requirements
 
-- Python 3.6 or higher
-- `watchdog` library
-- `rarfile` library
-- `PyYAML` library
+- Python 3.9 or newer
+    - `watchdog` library
+    - `rarfile` library
+    - `PyYAML` library
+    - `UnRAR` library  
+*** OR ***
+- Docker
+    - Docker Compose (optional)
 
 ---
 
 ## Installation
 
-### Platform-Specific Instructions
+### Docker
 
----
-
-#### Docker
-
-Using WatchRARr with Docker makes the installation and setup process easier and more consistent across different platforms. Below are the steps to run WatchRARr using Docker:
-
-1. Make sure you have Docker installed on your system. If not, you can download it from the [official website](https://www.docker.com/get-started).
-
-2. Clone the repository:
-
-```bash
-git clone https://github.com/HomeLabineer/WatchRARr.git
-cd WatchRARr
+1. Create your local Docker data folder - mine is just called `watchrarr`
+2. Create config.yaml in this directory, there is a template available [right here](config-template.yaml)
+2. Create your docker-compose.yaml wherever you store it (Or add to an existing one)
+3. Edit the `docker-compose.yaml` file to match your local paths and preferences.
+2. Start the Docker container:
+```
+docker-compose up -d watchrarr
 ```
 
-1. Make a `config.yaml` by copying `config-template.yaml`:
-```bash
-mv config-template.yaml config.yaml
+### Script
+
+1. Clone the repository:
 ```
-
-2. Edit the `config.yaml` as needed, here is mine as an example:
-```yaml
-# watchrarr.py configuration file
-# Copyright (C) 2023 HomeLabineer
-# This project is licensed under the MIT License. See the LICENSE file for details.
-
-# Path to the directory you want to watch.
-# path: test # Comment out if using docker
-
-# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired directory to watch:
-path: /app/watch
-# docker-compose ex: - /mnt/data:/app/watch
-
-# Use polling observer (useful for NFS shares). Set to 'true' or 'false'.
-polling: False
-
-# Polling interval in seconds. Must be a positive number greater than 0 and less than or equal to 300.
-interval: 60
-
-# Path to the log file where events will be recorded.
-# log_file: watchrarr.log # Comment out if using docker
-
-# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired logs directory:
-log_file: /app/logs/watchrarr.log
-# docker-compose ex: - logs
-
-# Enable debug logging. Set to 'true' or 'false'.
-debug: false
-
-# The maximum size of the log file in MB before it's rotated. Must be an integer between 10 MB and 100 MB.
-max_log_size: 10
-
-# The number of backup log files to keep before overwriting the oldest log file. Must be an integer between 1 and 100.
-log_backup_count: 9
-```
-
-4. Edit the `docker-compose.yaml` as needed, here is mine as an example:
-```yaml
-services:
-  watchrarr:
-    image: homelabineer/watchrarr:latest
-    container_name: watchrarr
-    restart: unless-stopped
-    volumes:
-      - /mnt/docker_data/watchrarr/config.yaml:/app/config.yaml
-      - /mnt/docker_data/watchrarr/logs:/app/logs
-      - /mnt/media/Complete:/app/watch
-```
-
-5. Start the WatchRARr container:
-```bash
-docker-compose up -d
-```
-
----
-
-#### Linux / macOS
-
-1. Install Python 3.6 or newer if you haven't already. You can download Python from the [official website](https://www.python.org/downloads/).
-
-2. Clone the repository:
-```bash
-git clone https://github.com/HomeLabineer/WatchRARr.git
+git clone https://github.com/HomeLabineer/watchrarr.git
 cd watchrarr
 ```
-3. Install required packages:
-```bash
+2. Install the required Python packages:
+```
 pip install -r requirements.txt
 ```
-4. Copy the `config-template.yaml` as `config.yaml`:
-```bash
-cp config-template.yaml config.yaml
+3. Edit the `config.yaml` file to match your local paths and preferences.
+4. Run the script:
 ```
-5. Run the script:
-```bash
 python3 watchrarr.py
 ```
-
----
-
-#### Windows
-
-> :warning: **Disclaimer:** The WatchRARr project was primarily developed and tested on Linux and macOS systems. The instructions provided below for Windows are theoretical and may require adjustments to work correctly. If you are a Windows user and would like to contribute by improving the compatibility of this program or the documentation, please consider submitting a merge request.  Any reported issues for Windows will likely be directed here and closed without resolution.
-
-1. Install Python 3.7 or newer if you haven't already. You can download Python from the [official website](https://www.python.org/downloads/). Make sure to add Python to your PATH during installation.
-
-2. Clone the repository using a Git client, or download and extract the ZIP file from the repository page.
-
-3. Open a command prompt and navigate to the watchrarr directory:
-
-```ps
-cd path\to\watchrarr
-```
- 
-4. Install required packages:
-
-```ps
-pip install -r requirements.txt
-```
-
-5. Copy the `config-template.yaml` as `config.yaml`:
-
-```bash
-cp config-template.yaml config.yaml
-```
-
-6. Run the script:
-
-```ps
-python3 watchrarr.py
-```
-
----
-
-## Usage
-
-```bash
-usage: watchrarr.py [-h] [--path PATH] [--config CONFIG] [--polling] [--interval INTERVAL] [--log_file LOG_FILE] [--debug] [--max_log_size MAX_LOG_SIZE] [--log_backup_count LOG_BACKUP_COUNT]
-
-Recursively watch a directory for RAR files.
-
-optional arguments:
--h, --help show this help message and exit
---path PATH Path to the directory you want to watch.
---config CONFIG Path to the configuration file (YAML format).
---polling Use polling observer (useful for NFS shares).
---interval INTERVAL Polling interval in seconds.
---log_file LOG_FILE Path to the log file where events will be recorded.
---debug Enable debug logging.
---max_log_size MAX_LOG_SIZE
-The maximum size of the log file in megabytes before its rotated.
---log_backup_count LOG_BACKUP_COUNT
-The number of backup log files to keep before overwriting the oldest log file.
-
-Default values for these options can be found in the example config.yaml file.
-```
-
----
-
-## Example
-
-To watch a directory called `my_directory` and use the default settings: `python watchrarr.py --path my_directory`
 
 ---
 
 ## Configuration
 
-The script can be configured using command-line arguments or by specifying the settings in a YAML configuration file. By default, the script looks for a `config.yaml` file in the same directory as the script. You can also provide a custom configuration file using the `--config` argument.
+Edit the `config.yaml` file to configure the application. The available settings include:
 
-Here is an example `config.yaml` file with all the available options:
-
-```yaml
-path: test
-polling: true
-interval: 5
-log_file: watchrarr.log
-debug: false
-max_log_size: 10
-log_backup_count: 8
-```
+- `log_file`: The log file path.
+- `max_log_size`: The maximum log file size in MB.
+- `log_rotations`: The number of log files to keep in rotation.
+- `scan_interval`: The scan interval in seconds.
+- `db_file`: The SQLite database file path.
+- `logging_level`: The logging level (DEBUG, INFO, WARNING, ERROR, or CRITICAL).
+- `watch_directory`: The directory to watch for RAR files.
 
 ---
+
+## Usage
+
+- If running in Docker, ensure the `watch_directory` setting in the `config.yaml` file matches the host directory mounted in the `docker-compose.yaml` file.
+- If running as a script, set the `watch_directory` setting in the `config.yaml` file to the desired directory path.
+
+Once the application is running, it will continuously monitor the specified directory for RAR files and extract them when detected.
+
+---
+
+## Planned
+
+- Alerting - Prometheus, Telegram, Slack, Discord, etc
+- Logging overhaul - Make things prettier, less chatter, good debugging and ultimately helps improve alerting, if enabled
+- Migration function in db-manager.sh script - quickly update pathing, translate windows to linux network pathing (The slashes / are opposite \\ )
+- I may rethink how I am detecting a previously extracted archive as I could simply (or in addition to current method) check if the extracted file exists
+- At startup the first time, it will extract EVERY archive found if they are not already in the db.  If for some reason this is unwanted, a helper script to add all existing archives to the db first could be used.  That or even simply adding a falg or configuration to enable first run.  If true and .db file doesn't exist, then add archives to db without extracting.  Stop container, switch to false and fire it back up.  IDK which way user's would prefer, maybe both?  Options can be nice.
+
+---
+
 
 ## Contributing
 
 Thank you for your interest in contributing to WatchRARr! We appreciate your help in making this project better. Here are some guidelines to help ensure a smooth contribution process:
+
+---
 
 ### Reporting issues
 
@@ -212,6 +125,8 @@ If you encounter any issues with the project, please create a new issue on the [
 - Steps to reproduce the issue
 - Expected and actual behavior
 - Any relevant logs or error messages
+
+---
 
 ### Submitting pull requests
 
@@ -229,39 +144,6 @@ If you would like to submit a pull request, please follow these steps:
 
 6. Create a pull request with a clear and concise description of your changes. In your pull request message, please include any relevant information, such as the issue being addressed, new features added, or bugfixes applied.
 
-### Coding Standards and Best Practices
-
-When contributing to this project, please adhere to the following coding standards and best practices:
-
-- Write clear and concise code, with appropriate comments explaining the functionality of each section or function.
-- Follow the established code structure and organization.
-- Use meaningful variable and function names that accurately describe their purpose.
-- Write tests to cover new functionality or to reproduce and fix any reported issues.
-- Keep functions small and focused, adhering to the Single Responsibility Principle.
-
-### Code Style
-
-This project follows the [PEP8](https://www.python.org/dev/peps/pep-0008/) naming convention for Python code. Please ensure your contributions adhere to these guidelines.
-
-Some key points from PEP8 naming convention:
-
-- Use `snake_case` for variable and function names.
-- Use `CamelCase` for class names.
-- Constants should be in `UPPER_CASE_WITH_UNDERSCORES`.
-- Keep names descriptive and not too long.
-
-For more details, please refer to the [official PEP8 guidelines](https://www.python.org/dev/peps/pep-0008/#naming-conventions).
-
-### Testing practices
-
-To ensure the quality and reliability of the project, please follow these testing practices when contributing:
-
-- Write unit tests for new features and bug fixes.
-- Ensure that your code passes all existing tests before submitting a pull request.
-- Update or add new tests as needed to maintain high test coverage.
-
-By following these guidelines, you'll help us maintain a high-quality, reliable, and easy-to-understand codebase. Thank you for your contribution!
-
 ---
 
 ## Credits
@@ -270,6 +152,8 @@ This project was developed using various programming tools, including the ChatGP
 
 ---
 
-# License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+

@@ -1,4 +1,16 @@
-version: '3.8'
+"""
+docker-compose.yaml - A Docker-compose configuration file for WatchRARr
+
+------------------------------
+WatchRARr Info
+------------------------------
+Copyright (C) 2023 HomeLabineer
+This project is licensed under the MIT License. See the LICENSE file for details.
+Script Name: watchrarr.py
+Description: A script to recursively watch a directory for RAR files and extract them upon creation.
+             The script processes both single RAR files and split/spanned RAR archives. It also maintains
+             a SQLite database to keep track of processed files and avoid reprocessing them.
+"""
 
 services:
   watchrarr:
@@ -6,10 +18,7 @@ services:
     container_name: watchrarr
     restart: unless-stopped
     volumes:
-      - /mnt/docker_data/watchrarr/config.yaml:/app/config.yaml
-      - /mnt/docker_data/watchrarr/logs:/app/logs
-      - /mnt/media/Complete:/app/watch
-
-# This configuration maps the logs directory inside the container to a local logs directory and maps the watch directory inside the container to a local directory specified by /path/to/your/watch/directory. Replace /path/to/your/watch/directory with the actual path of the directory you want to watch on your host system.
-
-# Make sure the script is configured to save logs and monitor the /app/logs and /app/watch directories respectively inside the container. This way, the logs and monitored files will be stored on your local system and persist across container restarts.
+      - /<your-local-path>/watchrarr/config.yaml:/app/config.yaml
+      - /<your-local-path>/watchrarr/logs:/app/logs
+      - /<your-local-path>/watchrarr/db:/app/db
+      - /<your-local-path>:/app/watch

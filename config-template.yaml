@@ -1,32 +1,42 @@
-# watchrarr.py configuration file
+# WatchRARr Configuration File
+# Copyright (C) 2023 HomeLabineer
+# """
+# config.yaml - A Python configuration file for WatchRARr
+
+# ------------------------------
+# WatchRARr Info
+# ------------------------------
 # Copyright (C) 2023 HomeLabineer
 # This project is licensed under the MIT License. See the LICENSE file for details.
+# Script Name: watchrarr.py
+# Description: A script to recursively watch a directory for RAR files and extract them upon creation.
+#              The script processes both single RAR files and split/spanned RAR archives. It also maintains
+#              a SQLite database to keep track of processed files and avoid reprocessing them.
+# """
 
-# Path to the directory you want to watch.
-# path: test # Comment out if using docker
+# The log file path
+log_file: app/logs/watchrarr.log
 
-# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired directory to watch:
-path: /app/watch
-# docker-compose ex: - /mnt/data:/app/watch
-
-# Use polling observer (useful for NFS shares). Set to 'true' or 'false'.
-polling: False
-
-# Polling interval in seconds. Must be a positive number greater than 0 and less than or equal to 300.
-interval: 60
-
-# Path to the log file where events will be recorded.
-# log_file: watchrarr.log # Comment out if using docker
-
-# If using docker, uncomment the following line and make sure your docker-compose properly maps the desired logs directory:
-log_file: /app/logs/watchrarr.log
-# docker-compose ex: - logs
-
-# Enable debug logging. Set to 'true' or 'false'.
-debug: false
-
-# The maximum size of the log file in MB before it's rotated. Must be an integer between 10 MB and 100 MB.
+# The maximum log file size in MB
 max_log_size: 10
 
-# The number of backup log files to keep before overwriting the oldest log file. Must be an integer between 1 and 100.
-log_backup_count: 9
+# The number of log files to keep in rotation
+log_rotations: 9
+
+# The scan interval in seconds (5 minutes = 300)
+scan_interval: 600
+
+# The SQLite database file path
+db_file: /app/db/extracted-files.db
+
+# The logging level (DEBUG, INFO, WARNING, ERROR, or CRITICAL)
+logging_level: 'INFO'
+
+# If running in docker:
+watch_directory: /app/watch
+# and in your docker-compose, you will need:
+# /<your-local-path>:/app/watch_directory
+
+# if running as a script:
+# <your-local-path>/watch/
+
