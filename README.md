@@ -30,7 +30,7 @@ WatchRARr is a Python application designed to recursively watch a directory for 
 - Comes with a [helper script](db-manager.sh) to manage the db - This allows you to easily see what is in the db, remove entries, manually add entries, take db backups and restore from backup
 - Designed best to run as a Docker container along with the rest of your *arr apps!
 
-Check out [examples.txt](examples.txt) to see examples of logging in action
+Check out [examples.txt](example.txt) to see examples of logging in action
 
 ---
 
