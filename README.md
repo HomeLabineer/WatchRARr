@@ -141,6 +141,9 @@ If you want to contribute and support my work, you can do so at the following:
 <a href="https://www.patreon.com/homelabineer">
   <img src="https://img.shields.io/badge/Support_on-Patreon-orange?logo=patreon&style=flat-square" alt="Patreon" />
 </a>
+<a href="https://paypal.me/homelabineer?country.x=US&locale.x=en_US">
+  <img src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square&logo=paypal" alt="PayPal" />
+</a>
 
 ---
 
