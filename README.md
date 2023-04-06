@@ -4,6 +4,51 @@ WatchRARr is a Python application designed to recursively watch a directory for 
 
 ---
 
+## Proof is in the logs:
+
+```
+You can see here it pickup the new files:
+
+2023-04-06 02:07:18,310 - INFO - Finished manual directory scan.
+2023-04-06 02:08:01,298 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.nfo
+2023-04-06 02:08:01,304 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r00
+2023-04-06 02:08:02,051 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r01
+2023-04-06 02:08:03,165 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r02
+2023-04-06 02:08:04,911 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r03
+2023-04-06 02:08:05,970 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r04
+2023-04-06 02:08:06,744 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r05
+2023-04-06 02:08:07,469 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r06
+2023-04-06 02:08:08,525 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r07
+2023-04-06 02:08:09,278 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r08
+2023-04-06 02:08:10,270 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r09
+2023-04-06 02:08:11,291 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r10
+2023-04-06 02:08:12,344 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r11
+2023-04-06 02:08:13,374 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r12
+2023-04-06 02:08:14,598 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r13
+2023-04-06 02:08:15,627 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r14
+2023-04-06 02:08:16,692 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r15
+2023-04-06 02:08:17,451 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r16
+2023-04-06 02:08:18,380 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r17
+2023-04-06 02:08:19,516 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r18
+2023-04-06 02:08:20,049 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+2023-04-06 02:08:20,049 - INFO - New RAR file detected: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+```
+***  Notice the time gap here of 15 seconds while it waits to ensure not just the .rar, but all the .rXX files have finished being moved ***
+```
+2023-04-06 02:08:35,085 - INFO - Extracting watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+2023-04-06 02:08:35,102 - INFO - Extracting HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv.tmp
+```
+*** During extraction appends .tmp to prevent the real 'rarr from trying to snag the media mid extraction *** 
+```
+2023-04-06 02:08:54,534 - INFO - Renaming watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv.tmp to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv
+```
+*** Followed by a rename to remove it ***
+```
+2023-04-06 02:08:54,537 - INFO - Successfully extracted watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264
+```
+
+---
+
 ## Table of Contents
 
 - [Requirements](#requirements)
