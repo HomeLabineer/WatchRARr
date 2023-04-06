@@ -1,0 +1,96 @@
+
+
+You can see here it pickup the new files:
+
+2023-04-06 02:07:18,310 - INFO - Finished manual directory scan.
+2023-04-06 02:08:01,298 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.nfo
+2023-04-06 02:08:01,304 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r00
+2023-04-06 02:08:02,051 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r01
+2023-04-06 02:08:03,165 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r02
+2023-04-06 02:08:04,911 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r03
+2023-04-06 02:08:05,970 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r04
+2023-04-06 02:08:06,744 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r05
+2023-04-06 02:08:07,469 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r06
+2023-04-06 02:08:08,525 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r07
+2023-04-06 02:08:09,278 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r08
+2023-04-06 02:08:10,270 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r09
+2023-04-06 02:08:11,291 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r10
+2023-04-06 02:08:12,344 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r11
+2023-04-06 02:08:13,374 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r12
+2023-04-06 02:08:14,598 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r13
+2023-04-06 02:08:15,627 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r14
+2023-04-06 02:08:16,692 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r15
+2023-04-06 02:08:17,451 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r16
+2023-04-06 02:08:18,380 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r17
+2023-04-06 02:08:19,516 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.r18
+2023-04-06 02:08:20,049 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+2023-04-06 02:08:20,049 - INFO - New RAR file detected: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+
+***  Notice the time gap here of 15 seconds while it waits to ensure not just the .rar, but all the .rXX files have finished being moved ***
+
+2023-04-06 02:08:35,085 - INFO - Extracting watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar
+2023-04-06 02:08:35,102 - INFO - Extracting HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv.tmp
+
+    ***                                                                                During extraction appends .tmp to prevent the real 'rarr from trying to snag the media mid extraction  ^^^  Followed by a rename to remove it 
+
+2023-04-06 02:08:54,534 - INFO - Renaming watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv.tmp to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv
+2023-04-06 02:08:54,537 - INFO - Successfully extracted watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.rar to watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264
+2023-04-06 02:08:54,540 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.s11e18.720p.hdtv.x264.sfv
+2023-04-06 02:08:54,541 - INFO - File created: watch/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264/HomeLabineer.Family.Videos.S11E18.720p.HDTV.x264.mkv.tmp
+
+
+
+Here is a Bang - Bang!
+
+2023-04-06 03:07:22,500 - INFO - Finished manual directory scan.
+2023-04-06 03:10:40,192 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r00
+2023-04-06 03:10:41,241 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r01
+2023-04-06 03:10:42,207 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r02
+2023-04-06 03:10:43,224 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r03
+2023-04-06 03:10:44,790 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r04
+2023-04-06 03:10:45,867 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r05
+2023-04-06 03:10:46,510 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r06
+2023-04-06 03:10:47,295 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r07
+2023-04-06 03:10:48,621 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r08
+2023-04-06 03:10:49,893 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r09
+2023-04-06 03:10:52,798 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r10
+2023-04-06 03:10:54,018 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r11
+2023-04-06 03:10:55,198 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r12
+2023-04-06 03:10:56,381 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r13
+2023-04-06 03:10:57,576 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.r14
+2023-04-06 03:10:58,351 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.rar
+2023-04-06 03:10:58,352 - INFO - New RAR file detected: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.rar
+2023-04-06 03:11:13,614 - INFO - Extracting watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.rar
+2023-04-06 03:11:13,652 - INFO - Extracting HomeLabineer.Shhhh.S10E18.720p.HDTV.x264.mkv to watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264.mkv.tmp
+2023-04-06 03:11:37,915 - INFO - Renaming watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264.mkv.tmp to watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264.mkv
+2023-04-06 03:11:37,919 - INFO - Successfully extracted watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.rar to watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264
+2023-04-06 03:11:37,922 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.s10e18.720p.hdtv.x264.sfv
+2023-04-06 03:11:37,922 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.nfo
+2023-04-06 03:11:37,923 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r00
+2023-04-06 03:11:37,923 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r01
+2023-04-06 03:11:37,923 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r02
+2023-04-06 03:11:37,924 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r03
+2023-04-06 03:11:37,924 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r04
+2023-04-06 03:11:37,924 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r05
+2023-04-06 03:11:37,924 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r06
+2023-04-06 03:11:37,925 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r07
+2023-04-06 03:11:37,925 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r08
+2023-04-06 03:11:37,925 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r09
+2023-04-06 03:11:37,925 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r10
+2023-04-06 03:11:37,926 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r11
+2023-04-06 03:11:37,926 - INFO - File created: watch/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264/HomeLabineer.Shhhh.S10E18.720p.HDTV.x264.mkv.tmp
+2023-04-06 03:11:37,928 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r12
+2023-04-06 03:11:37,930 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r13
+2023-04-06 03:11:37,932 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r14
+2023-04-06 03:11:37,935 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r15
+2023-04-06 03:11:37,937 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r16
+2023-04-06 03:11:37,938 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.r17
+2023-04-06 03:11:37,940 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.rar
+2023-04-06 03:11:37,940 - INFO - New RAR file detected: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.rar
+2023-04-06 03:11:52,961 - INFO - Extracting watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.rar
+2023-04-06 03:11:53,075 - INFO - Extracting HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264.mkv to watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264.mkv.tmp
+2023-04-06 03:12:14,757 - INFO - Renaming watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264.mkv.tmp to watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264.mkv
+2023-04-06 03:12:14,761 - INFO - Successfully extracted watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.rar to watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264
+2023-04-06 03:12:14,768 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.s05e09.720p.hdtv.x264.sfv
+2023-04-06 03:12:14,769 - INFO - File created: watch/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264/HomeLabineer.Dont.Ask.Ill.Still.Tell.S05E09.720p.HDTV.x264.mkv.tmp
+

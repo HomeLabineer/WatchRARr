@@ -30,6 +30,24 @@ WatchRARr is a Python application designed to recursively watch a directory for 
 - Comes with a [helper script](db-manager.sh) to manage the db - This allows you to easily see what is in the db, remove entries, manually add entries, take db backups and restore from backup
 - Designed best to run as a Docker container along with the rest of your *arr apps!
 
+Check out [examples.txt](examples.txt) to see examples of logging in action
+
+---
+
+## Support
+
+Hey, it's great if you just appreciate my work and want to use it for free.  If you have found it helpful at all and want to support my work, you can:
+
+<a href="https://github.com/sponsors/homelabineer">
+  <img src="https://img.shields.io/badge/Sponsor_on-GitHub-green?logo=github&style=flat-square" alt="GitHub Sponsors" />
+</a>
+<a href="https://www.patreon.com/homelabineer">
+  <img src="https://img.shields.io/badge/Support_on-Patreon-orange?logo=patreon&style=flat-square" alt="Patreon" />
+</a>
+<a href="https://paypal.me/homelabineer?country.x=US&locale.x=en_US">
+  <img src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square&logo=paypal" alt="PayPal" />
+</a>
+
 ---
 
 ## Requirements
@@ -114,6 +132,15 @@ Once the application is running, it will continuously monitor the specified dire
 ## Contributing
 
 Thank you for your interest in contributing to WatchRARr! We appreciate your help in making this project better. Here are some guidelines to help ensure a smooth contribution process:
+
+If you want to contribute and support my work, you can do so at the following:
+
+<a href="https://github.com/sponsors/homelabineer">
+  <img src="https://img.shields.io/badge/Sponsor_on-GitHub-green?logo=github&style=flat-square" alt="GitHub Sponsors" />
+</a>
+<a href="https://www.patreon.com/homelabineer">
+  <img src="https://img.shields.io/badge/Support_on-Patreon-orange?logo=patreon&style=flat-square" alt="Patreon" />
+</a>
 
 ---
 
