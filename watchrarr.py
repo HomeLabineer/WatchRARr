@@ -47,6 +47,7 @@ from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from logging.handlers import RotatingFileHandler
+from logging import _nameToLevel as log_levels_dict
 
 def main(args):
     # Configure logging
@@ -112,7 +113,6 @@ def wait_for_transfer_completion(file_path):
     stable_start_time = None
 
     related_files = get_related_rar_files(file_path)
-    logging.info(f"Found {len(related_files)} related RAR files for {file_path}")
     file_sizes = {f: -1 for f in related_files}
 
     logging.info(f"Waiting for transfer completion of {file_path} and related files...")
@@ -208,7 +208,8 @@ def parse_args():
     parser.add_argument('-d', '--db_file', help="Path to the SQLite database file.")
     parser.add_argument('-l', '--log_file', help="Path to the log file.")
     parser.add_argument('-i', '--scan_interval', help="Scan interval in seconds.", type=int)
-    parser.add_argument('--logging_level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], default="INFO", help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
+    parser.add_argument('--logging_level', choices=[x.lower() for x in list(log_levels_dict.keys())[:-1]], help='Logging level (default="INFO")')
+    # parser.add_argument('--logging_level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
     parser.add_argument('--max_log_size', help="Maximum log file size in MB.", type=int)
     parser.add_argument('--log_rotations', help="Number of log files to keep in rotation.", type=int)
     return parser.parse_args()
