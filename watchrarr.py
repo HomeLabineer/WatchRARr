@@ -30,6 +30,8 @@ Configuration Options (config.yaml):
 ------------------------------
 """
 
+__version__ = '1.2.6-develop'
+
 import argparse
 import logging
 import os
@@ -45,6 +47,7 @@ from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from logging.handlers import RotatingFileHandler
+from logging import _nameToLevel as log_levels_dict
 
 def main(args):
     # Configure logging
@@ -60,7 +63,8 @@ def main(args):
     logger.addHandler(log_handler)
     logger.setLevel(getattr(logging, args.logging_level.upper()))
 
-    logging.info("WatchRARr successfully started")
+    logging.info(f"WatchRARr v{__version__} successfully started")
+    logging.info("Configuration file loaded successfully.")
 
     # Initialize the SQLite database
     conn = sqlite3.connect(args.db_file)
@@ -111,6 +115,8 @@ def wait_for_transfer_completion(file_path):
     related_files = get_related_rar_files(file_path)
     file_sizes = {f: -1 for f in related_files}
 
+    logging.info(f"Waiting for transfer completion of {file_path} and related files...")
+
     while True:
         all_files_stable = True
 
@@ -155,7 +161,7 @@ def process_rar_file(filepath, args):
         except sqlite3.IntegrityError:
             logging.warning(f"File path {filepath} already exists in the database. Skipping insertion.")
     else:
-        logging.info(f"File {filepath} has already been processed.")
+        logging.debug(f"File {filepath} has already been processed.")
 
     conn.close()
 
@@ -168,6 +174,7 @@ def create_processed_files_table(conn):
         )
     """)
     conn.commit()
+    logging.info("Processed_files table initialized in the SQLite database.")
 
 def manual_scan(args, conn):
     """Perform a manual scan of the watch_directory to process existing RAR files."""
@@ -189,7 +196,7 @@ def manual_scan(args, conn):
                     cursor.execute("INSERT OR REPLACE INTO processed_files (filepath, mtime) VALUES (?, ?)", (filepath, file_mtime))
                     conn.commit()
                 else:
-                    logging.info(f"File {filepath} has already been processed.")
+                    logging.debug(f"File {filepath} has already been processed.")
 
     logging.info("Finished manual directory scan.")
 
@@ -201,7 +208,8 @@ def parse_args():
     parser.add_argument('-d', '--db_file', help="Path to the SQLite database file.")
     parser.add_argument('-l', '--log_file', help="Path to the log file.")
     parser.add_argument('-i', '--scan_interval', help="Scan interval in seconds.", type=int)
-    parser.add_argument('--logging_level', help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
+    parser.add_argument('--logging_level', choices=[x.lower() for x in list(log_levels_dict.keys())[:-1]], help='Logging level (default="INFO")')
+    # parser.add_argument('--logging_level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
     parser.add_argument('--max_log_size', help="Maximum log file size in MB.", type=int)
     parser.add_argument('--log_rotations', help="Number of log files to keep in rotation.", type=int)
     return parser.parse_args()
@@ -213,13 +221,19 @@ def extract_rar(filepath):
         with rarfile.RarFile(filepath) as rf:
             target_dir = os.path.dirname(filepath)
 
+            logging.info(f"Number of files in the archive: {len(rf.infolist())}")
+
+            start_time = time.time()
+            extracted_files_size = 0
+
             # Extract files with a .tmp extension
             for rar_info in rf.infolist():
                 tmp_file_path = os.path.join(target_dir, rar_info.filename + '.tmp')
                 logging.info(f"Extracting {rar_info.filename} to {tmp_file_path}")
+                extracted_files_size += rar_info.file_size
                 with open(tmp_file_path, 'wb') as tmp_file:
                     with rf.open(rar_info) as rar_file:
-                        # Read and write data in chunks
+                        # Read and wrdddddddddddddddite data in chunks
                         chunk_size = 1024 * 1024  # 1 MiB
                         while (chunk := rar_file.read(chunk_size)):
                             tmp_file.write(chunk)
@@ -231,7 +245,10 @@ def extract_rar(filepath):
                 logging.info(f"Renaming {tmp_file_path} to {final_file_path}")
                 shutil.move(tmp_file_path, final_file_path)
 
+            elapsed_time = time.time() - start_time
+            extracted_files_size_mb = extracted_files_size / (1024 * 1024)
             logging.info(f"Successfully extracted {filepath} to {target_dir}")
+            logging.info(f"{filepath} took {elapsed_time:.2f} seconds and extracted files size is {extracted_files_size_mb:.2f} MB.")
     except (rarfile.Error, IOError, OSError) as e:
         logging.error(f"Failed to extract {filepath}: {str(e)}")
 
