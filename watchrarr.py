@@ -30,6 +30,8 @@ Configuration Options (config.yaml):
 ------------------------------
 """
 
+__version__ = '1.2.6-develop'
+
 import argparse
 import logging
 import os
@@ -45,7 +47,8 @@ from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from logging.handlers import RotatingFileHandler
-from logging import _nameToLevel as log_levels_dict
+# from logging import _nameToLevel as log_levels_dict
+
 
 def main(args):
     # Configure logging
@@ -61,7 +64,8 @@ def main(args):
     logger.addHandler(log_handler)
     logger.setLevel(getattr(logging, args.logging_level.upper()))
 
-    logging.info("WatchRARr successfully started")
+    logging.info(f"WatchRARr v{__version__} successfully started")
+    logging.info("Configuration file loaded successfully.")
 
     # Initialize the SQLite database
     conn = sqlite3.connect(args.db_file)
@@ -206,7 +210,8 @@ def parse_args():
     parser.add_argument('-d', '--db_file', help="Path to the SQLite database file.")
     parser.add_argument('-l', '--log_file', help="Path to the log file.")
     parser.add_argument('-i', '--scan_interval', help="Scan interval in seconds.", type=int)
-    parser.add_argument('--logging_level', choices=[x.lower() for x in list(log_levels_dict.keys())[:-1]], default="INFO", help='Logging level (default="INFO")')
+    parser.add_argument('--logging_level', help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
+    # parser.add_argument('--logging_level', choices=[x.lower() for x in list(log_levels_dict.keys())[:-1]], default="INFO", help='Logging level (default="INFO")')
     parser.add_argument('--max_log_size', help="Maximum log file size in MB.", type=int)
     parser.add_argument('--log_rotations', help="Number of log files to keep in rotation.", type=int)
     return parser.parse_args()
@@ -230,7 +235,7 @@ def extract_rar(filepath):
                 extracted_files_size += rar_info.file_size
                 with open(tmp_file_path, 'wb') as tmp_file:
                     with rf.open(rar_info) as rar_file:
-                        # Read and write data in chunks
+                        # Read and wrdddddddddddddddite data in chunks
                         chunk_size = 1024 * 1024  # 1 MiB
                         while (chunk := rar_file.read(chunk_size)):
                             tmp_file.write(chunk)
@@ -278,7 +283,6 @@ if __name__ == '__main__':
     # Load configuration from the YAML file
     with open(args.config, 'r') as f:
         config = yaml.safe_load(f)
-    logging.info("Configuration file loaded successfully.")
 
     # Update args with values from the config file, unless they were provided as command-line arguments
     for key, value in config.items():
