@@ -47,8 +47,6 @@ from time import sleep
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from logging.handlers import RotatingFileHandler
-# from logging import _nameToLevel as log_levels_dict
-
 
 def main(args):
     # Configure logging
@@ -210,8 +208,7 @@ def parse_args():
     parser.add_argument('-d', '--db_file', help="Path to the SQLite database file.")
     parser.add_argument('-l', '--log_file', help="Path to the log file.")
     parser.add_argument('-i', '--scan_interval', help="Scan interval in seconds.", type=int)
-    parser.add_argument('--logging_level', help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
-    # parser.add_argument('--logging_level', choices=[x.lower() for x in list(log_levels_dict.keys())[:-1]], default="INFO", help='Logging level (default="INFO")')
+    parser.add_argument('--logging_level', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], default="INFO", help="Logging level. Choose from DEBUG, INFO, WARNING, ERROR, and CRITICAL.")
     parser.add_argument('--max_log_size', help="Maximum log file size in MB.", type=int)
     parser.add_argument('--log_rotations', help="Number of log files to keep in rotation.", type=int)
     return parser.parse_args()
